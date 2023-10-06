@@ -63,21 +63,19 @@ exports.login = async (req, res) => {
         .status(401)
         .json(customizeResponse(false, "Invalid email or password..!"));
     }
-    let token = jwt.sign(
-      { id: existingUser._id, email, role: existingUser.role },
-      secretkey,
-      { expiresIn: "1m" }
-    );
-    res.set("token", token);
+    let payload = { id: existingUser._id, email, role: existingUser.role };
+    let token = await jwt.sign(payload, secretkey,{expiresIn:'1m'});
+    // res.set("token", token);
     let finalResponse = {
       email,
       username: existingUser.username,
+      token
     };
     res
       .status(200)
       .json(customizeResponse(true, "Login successfull", finalResponse));
   } catch (error) {
-    logger.error("Error while connecting to mongodb", error);
-    res.status(400).json(customizeResponse(false, "Error while login", error));
+    logger.error("Error in admin login", error);
+    res.status(400).json(customizeResponse(false, "Error in admin login", error));
   }
 };

@@ -1,4 +1,4 @@
-module.exports.customizeResponse = (status, description, response = []) => {
+module.exports.customizeResponse = (status, description, response) => {
   return status
     ? {
         Status: "SUCCESS",
@@ -8,7 +8,7 @@ module.exports.customizeResponse = (status, description, response = []) => {
     : {
         Status: "FAIL",
         Description: description,
-        info: "Please check the error.log",
+        ...(response && { info: "Please check the error.log"}),
         Details: response,
       };
 };
