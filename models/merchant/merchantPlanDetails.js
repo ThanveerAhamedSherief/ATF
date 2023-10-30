@@ -18,7 +18,7 @@ const planDetailsSchema = new Schema({
     type: String,
   },
   isActive: {
-    type: Boolean,
+    type: Boolean, default: false
   },
 });
 

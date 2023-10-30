@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
         .json(customizeResponse(false, "Invalid email or password..!"));
     }
     let payload = { id: existingUser._id, email, role: existingUser.role };
-    let token = await jwt.sign(payload, secretkey,{expiresIn:'1m'});
+    let token = await jwt.sign(payload, secretkey,{expiresIn:'365d'});
     // res.set("token", token);
     let finalResponse = {
       email,

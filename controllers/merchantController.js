@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const { merchantAddress } = require("../models/merchant/merchantAddressSchema");
 const { secretkey } = require("../config/config");
+const { mailer } = require("../services/mailer");
 
 exports.merchantRegister = async (req, res) => {
   try {
@@ -40,13 +41,6 @@ exports.merchantRegister = async (req, res) => {
       return res
         .status(400)
         .json(customizeResponse(false, "Please fill all mandatory fields"));
-    }
-    let isExistingUser = await merchantsSchema.find({ email });
-    if (isExistingUser.length > 0) {
-      logger.error("User already Exists");
-      return res
-        .status(400)
-        .json(customizeResponse(false, "User already exists"));
     }
     let newAddress = null;
     if (addresses) {
@@ -91,6 +85,7 @@ exports.merchantRegister = async (req, res) => {
     });
     let createNewCustomer = await newCustomer.save();
     planDetails.merchantId = createNewCustomer.id;
+    mailer({email,username})
     res
       .status(201)
       .json(

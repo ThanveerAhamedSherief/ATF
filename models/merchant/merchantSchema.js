@@ -3,9 +3,9 @@ const { Schema } = mongoose;
 
 const merchantsSchema = new Schema(
   {
-    firstname: { type: String, required: [true, "Firstname is required"], unique: true },
+    firstname: { type: String, required: [true, "Firstname is required"] },
     lastname: { type: String, required: [true, "Lastname is required"] },
-    email: { type: String, required: [true, "Email is required"], unique: true },
+    email: { type: String, required: [true, "Email is required"] },
     username: { type: String, required: true, unique: true },
     storename: { type: String, required: true, unique: true },
     profilePicture: {
